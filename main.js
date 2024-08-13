@@ -29,13 +29,13 @@ async function loadGeoJSON() {
             const { name, merged_address, number_of_plots, jurisdiction, steward_or_managing_organization, public_e_mail, website } = feature.properties;
 
             const popupContent = `
-            <strong>${name}</strong><br>
-            Address: ${merged_address}<br>
-            Number of Plots: ${number_of_plots || 'N/A'}<br>
-            Jurisdiction: ${jurisdiction}<br>
-            Steward: ${steward_or_managing_organization || 'N/A'}<br>
-            Email: ${public_e_mail || 'N/A'}<br>
-            Website: ${website || 'N/A'}
+            <strong class="text-xl">${name}</strong><br><br>
+            <strong>Address:</strong> ${merged_address}<br>
+            <strong>Number of Plots:</strong> ${number_of_plots || 'N/A'}<br>
+            <strong>Jurisdiction:</strong> ${jurisdiction}<br>
+            <strong>Managing Organization:</strong> ${steward_or_managing_organization || 'N/A'}<br>
+            <strong>Email:</strong> ${public_e_mail || 'N/A'}<br>
+            <strong>Website:</strong> ${website ? `<a href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : 'N/A'}
             `;
 
             layer.bindPopup(popupContent);
