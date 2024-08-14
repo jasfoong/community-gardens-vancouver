@@ -5,6 +5,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+  
+const gardensLayer = L.layerGroup().addTo(map);
+const parksLayer = L.layerGroup();
+  
 const gardenIcon = L.icon({
     iconUrl: '/public/apple-freepik.png', 
     iconSize: [30, 30],
@@ -13,18 +17,18 @@ const gardenIcon = L.icon({
 });
 
 const parkIcon = L.icon({
-    iconUrl: '/public/butterfly-goodware.png', 
+    iconUrl: '/public/apple-tree-freepik.png', 
     iconSize: [25, 25],
     iconAnchor: [12, 25],
     popupAnchor: [0, -25]
-})
+});
 
-async function addCommunityGardensLayer(apiUrl) {
+async function addCommunityGardensLayer() {
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch('/data/community-gardens-and-food-trees.geojson');
         const data = await response.json();
         L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
+            pointToLayer: function (_feature, latlng) {
                 return L.marker(latlng, { icon: gardenIcon });
             },
             onEachFeature: function (feature, layer) {
@@ -39,18 +43,18 @@ async function addCommunityGardensLayer(apiUrl) {
                     <strong>Website:</strong> ${website ? `<a href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : 'N/A'}
                 `);
             }
-        }).addTo(map);
+        }).addTo(gardensLayer);
     } catch (error) {
         console.error('Error fetching community gardens data:', error);
     }
 }
 
-async function addParksLayer(apiUrl) {
+async function addParksLayer() {
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch('/data/parks.geojson');
         const data = await response.json();
         L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
+            pointToLayer: function (_feature, latlng) {
                 return L.marker(latlng, { icon: parkIcon });
             },
             onEachFeature: function (feature, layer) {
@@ -62,15 +66,27 @@ async function addParksLayer(apiUrl) {
                     <strong>Washrooms Available:</strong> ${washrooms}<br>
                 `);
             }
-        }).addTo(map);
+        }).addTo(parksLayer);
     } catch (error) {
         console.error('Error fetching parks data:', error);
     }
 }
 
-const communityGardensUrl = '/data/community-gardens-and-food-trees.geojson';
-const parksUrl = '/data/parks.geojson';
+addCommunityGardensLayer();
+addParksLayer();
 
+document.getElementById('toggleGardens').addEventListener('change', (event) => {
+    if (event.target.checked) {
+        gardensLayer.addTo(map);
+    } else {
+        map.removeLayer(gardensLayer);
+    }
+});
 
-addCommunityGardensLayer(communityGardensUrl);
-addParksLayer(parksUrl);
+document.getElementById('toggleParks').addEventListener('change', (event) => {
+    if (event.target.checked) {
+        parksLayer.addTo(map);
+    } else {
+        map.removeLayer(parksLayer);
+    }
+});

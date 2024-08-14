@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Gardens of Vancouver</title>
+    <title>Green Spaces Vancouver</title>
     <link rel="icon" href="/public/apple-freepik.png" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
@@ -15,7 +15,17 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <h1 class="text-lg font-bold text-center pt-8 pb-8">Community Gardens of Vancouver</h1>
+    <h1 class="text-xl font-bold text-center pt-8 pb-8">Green Spaces of Metro Vancouver</h1>
+    <section class="text-center py-2 px-4">
+        <label>
+            <input type="checkbox" id="toggleGardens" checked>
+            Community Gardens
+        </label>
+        <label class="ml-4">
+            <input type="checkbox" id="toggleParks">
+            Parks
+        </label>
+    </section>
     <div id="map" class="w-full h-full shadow-lg rounded-lg mx-auto px-4"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="main.js"></script>
