@@ -1,4 +1,4 @@
-# Green Spaces of Metro Vancouver
+# Green Spaces of Vancouver
 
 A simple, interactive map with markers for all the parks and community gardens in Vancouver. Clicking on any of the markers will present a pop up with relevent information. 
 
